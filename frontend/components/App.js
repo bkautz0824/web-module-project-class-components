@@ -2,45 +2,60 @@ import React from 'react'
 import TodoList from './TodoList'
 import Form from './Form'
 
-const todos = [
-  {
-    task: "walk the dog",
-    id: 1,
-    finsished: false
-  },
-  {
-    task: "take out trash",
-    id: 2,
-    finsished: false
-  },
-  {
-    task: "workout",
-    id: 3,
-    finsished: false
-  },
 
-]
 
 
 export default class App extends React.Component {
 
-  constructor() {
-    super()
-    this.state = {
-      todos: todos,
-    }
+
+   state = {
+    todos: [
+      {
+        task: "walk the dog",
+        id: 1,
+        completed: false
+      },
+      {
+        task: "take out trash",
+        id: 2,
+        completed: false
+      },
+      {
+        task: "workout",
+        id: 3,
+        completed: false
+      },
+    ]
+   }
+ 
+
+
+  handleClear = () => {
+    this.setState({
+      ...this.state,
+      todos: this.state.todos.filter(item => !item.completed)
+    })
   }
-
-
 
   render() {
 
+    const { todos } = this.state;
     return (
       <div>
-        <TodoList  
-          todos={this.state.todos}
-        />
-       <Form  />
+       <h1>Todos</h1>
+
+       <ul>
+         {
+           todos.map(todo => {
+            return (<li>{todo.task} { todo.completed? <span>Completed</span> : <span></span>} </li>)
+          })
+         }
+       </ul>
+       <form>
+         <input />
+         <button>Add</button> 
+       </form>
+       <button onClick={this.handleClear}>Clear</button>
       </div>
     )
   }
